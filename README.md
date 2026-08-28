@@ -55,6 +55,7 @@ rental/
 ├── views.py           # equipo_list y equipo_create
 ├── forms.py           # EquipoForm (forms.Form, no ModelForm)
 ├── urls.py            # Rutas de la app (app_name = "rental")
+├── tests.py           # Casos de prueba del flujo completo
 └── templates/
     ├── base.html      # Plantilla base con Tailwind
     └── rental/
@@ -129,6 +130,30 @@ Browser → Request (GET/POST /rental/..)
        → Response (HTML)
 ```
 
+**Capturas del flujo funcionando** (carpeta `capturas/`):
+
+1. `capturas/01_listado.png` — Listado inicial con los 5 equipos estáticos.
+2. `capturas/02_formulario.png` — Formulario "Registrar nuevo equipo".
+3. `capturas/03_listado_con_nuevo.png` — Listado después de crear "Cámara Sony A7 IV" (el nuevo registro se refleja; 6 equipos).
+
+### Casos de prueba (`rental/tests.py`)
+
+Ejecutar con: `python manage.py test rental`
+
+| Caso | Resultado |
+|------|-----------|
+| `test_listado_responde_200_y_usa_el_template` | GET /rental/ → 200 y usa `equipo_list.html` |
+| `test_listado_muestra_los_5_equipos_estaticos` | Muestra los 5 equipos estáticos, "Disponible" y "Agotado" |
+| `test_listado_muestra_estado_por_stock` | `disponible` es True/False según el stock |
+| `test_formulario_get_renderiza_el_template` | GET /rental/nuevo/ → 200 y usa `equipo_form.html` |
+| `test_post_valido_redirige_y_agrega_registro` | POST válido → 302 y agrega el equipo a `EQUIPOS` |
+| `test_listado_refleja_el_nuevo_registro` | El listado muestra el equipo recién creado |
+| `test_post_invalido_no_agrega_y_muestra_errores` | POST inválido → 200 con errores, sin agregar |
+| `test_form_valida_datos_correctos` | `EquipoForm` acepta datos válidos |
+| `test_form_rechaza_stock_cero` | `EquipoForm` rechaza stock = 0 |
+
+**Resultado:** 9 pruebas, 9 OK (`Ran 9 tests ... OK`).
+
 **Convivencia con las demás apps:** la app `rental` es una app Django independiente que se conecta al mismo `Project` (`todoproject`). Cada app aporta sus propias rutas con prefijos (`/rental/`, `/math/`, `/`) y sus propios templates. El `Project` actúa como contenedor: `settings.INSTALLED_APPS` las registra y `todoproject/urls.py` las enruta, sin mezclar código entre apps. `rental` además introduce `base.html` (plantilla base con Tailwind) de la cual heredan sus templates de listado y formulario.
 
 ---
@@ -143,6 +168,7 @@ Proyecto_Django_Suarez/
 ├── .gitignore
 ├── requirements.txt
 ├── README.md
+├── capturas/              (capturas de pantalla del flujo)
 └── todoproject/
     ├── manage.py
     ├── todoproject/         (settings, urls)
