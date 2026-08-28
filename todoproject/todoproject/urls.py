@@ -19,6 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tasks.urls')),
-    path('math/', include('math_app.urls')),
+    path('', include('landing.urls')), # <--- Solo esta ruta activa
 ]
