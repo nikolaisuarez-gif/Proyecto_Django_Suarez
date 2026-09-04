@@ -1,7 +1,9 @@
 # Laboratorio 01 — Django
 
-**Autor:** Nikolai Suarez  
-**Correo:** nikolai.suarez@tecsup.edu.pe  
+**Integrantes:**
+- Ian Alexander Rau Reyes
+- Nikolai Alexander Suarez Nuñez — nikolai.suarez@tecsup.edu.pe
+
 **Repositorio:** https://github.com/nikolaisuarez-gif/Proyecto_Django_Suarez
 
 Proyecto Django (Django 6.1) que contiene las aplicaciones `tasks`, `math_app` y la nueva app **`rental`** (Alquiler de Equipos).
@@ -169,6 +171,11 @@ Proyecto_Django_Suarez/
 ├── requirements.txt
 ├── README.md
 ├── capturas/              (capturas de pantalla del flujo)
+├── documentos/
+│   ├── ejercicio_1_2_requisitos.md      (Ej. 1 y 2)
+│   ├── ejercicio_3_modelo_datos.md      (Ej. 3)
+│   ├── evidencia_Ian_Rau_Reyes.md       (evidencia Integrante 1)
+│   └── evidencia_Nikolai_Suarez_Nunez.md (evidencia Integrante 2)
 └── todoproject/
     ├── manage.py
     ├── todoproject/         (settings, urls)
