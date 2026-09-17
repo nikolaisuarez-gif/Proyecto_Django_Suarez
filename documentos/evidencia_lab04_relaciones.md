@@ -42,6 +42,8 @@ Pillow==12.3.0
 
 ## 2. Diagrama de modelos (app `library`)
 
+**Imagen del diagrama:** `capturas/lab04_diagrama_modelos.png`
+
 ```
                     ┌──────────────────┐
                     │     Author       │
@@ -208,7 +210,7 @@ La vista `library.views.book_detail` usa `select_related("author", "publisher", 
 
 ## 8. Casos de prueba y resultados
 
-Ejecución: `python manage.py test library` → **16 pruebas, 16 OK** (19 JSON de success).
+Ejecución: `python manage.py test library` → **16 pruebas, 16 OK**.
 
 | Caso | Resultado |
 |------|-----------|
@@ -230,6 +232,19 @@ Ejecución: `python manage.py test library` → **16 pruebas, 16 OK** (19 JSON d
 | `test_book_list_shows_books` | Lista muestra los libros |
 
 Suite completa del proyecto: `python manage.py test` → **25 tests, 25 OK** (16 library + 9 rental). `manage.py check` → sin problemas.
+
+---
+
+## 8.5 Capturas propuestas (carpeta `capturas/`)
+
+Con el servidor corriendo (`python manage.py runserver`), tomar captura (Win+Shift+S) de:
+
+1. `capturas/lab04_listado.png` — http://127.0.0.1:8000/library/ (catálogo, 4 libros)
+2. `capturas/lab04_detalle.png` — http://127.0.0.1:8000/library/book/1/ (autor, editorial, categorías, publicación)
+3. `capturas/lab04_consultas.png` — consola con el output de las consultas de la sección 5
+4. `capturas/lab04_tests.png` — salida de `python manage.py test library` (16 OK)
+
+El diagrama ya generado: `capturas/lab04_diagrama_modelos.png`.
 
 ---
 
