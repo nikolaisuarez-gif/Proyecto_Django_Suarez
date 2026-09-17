@@ -1,0 +1,69 @@
+{% extends "library/base.html" %}
+
+{% block title %}{{ book.title }} — Biblioteca{% endblock %}
+
+{% block content %}
+    <a href="{% url 'library:book_list' %}" class="text-xs text-indigo-400 hover:text-indigo-300">
+        <i class="fa-solid fa-arrow-left mr-1"></i> Volver al catálogo
+    </a>
+
+    <div class="mt-4 bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="w-40 h-56 object-cover rounded-xl border border-slate-700">
+            {% else %}
+                <div class="w-40 h-56 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-4xl text-slate-500">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+            {% endif %}
+
+            <div class="flex-1">
+                <h2 class="text-3xl font-bold text-white">{{ book.title }}</h2>
+                <p class="mt-1 text-slate-400">ISBN {{ book.isbn }}</p>
+
+                <div class="mt-5 grid sm:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4">
+                        <p class="text-xs text-slate-400 uppercase tracking-wide">Autor</p>
+                        <p class="font-semibold text-indigo-300">{{ book.author.name }}</p>
+                        <p class="text-xs text-slate-500">{{ book.author.email }}</p>
+                    </div>
+
+                    <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-4">
+                        <p class="text-xs text-slate-400 uppercase tracking-wide">Editorial</p>
+                        <p class="font-semibold text-emerald-300">{{ book.publisher.name }}</p>
+                        <p class="text-xs text-slate-500">{{ book.publisher.city }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-sm">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Categorías</p>
+                    <div class="mt-2 flex flex-wrap gap-1.5">
+                        {% for category in book.categories.all %}
+                            <span class="text-[11px] px-2 py-0.5 rounded-full bg-indigo-600/20 border border-indigo-500/40 text-indigo-300">{{ category.name }}</span>
+                        {% empty %}
+                            <span class="text-slate-500">Sin categorías</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mt-4 bg-slate-800/60 border border-slate-700 rounded-xl p-4 text-sm">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Publicación (OneToOne)</p>
+                    <p class="font-semibold text-slate-200">{{ book.publication.title }} — {{ book.publication.publication_date }}</p>
+                    <p class="text-xs text-slate-500">{{ book.publication.edition }}ª edición · {{ book.publication.number_of_pages }} páginas · {{ book.publication.language }}</p>
+                </div>
+
+                <div class="mt-4 flex items-center gap-4">
+                    <span class="text-2xl font-bold text-white">S/ {{ book.price }}</span>
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400">{{ book.published_year|default:book.publication.publication_date|date:"Y" }}</span>
+                </div>
+            </div>
+        </div>
+
+        {% if book.summary %}
+            <div class="mt-6 text-sm text-slate-300 leading-relaxed">
+                <p class="text-xs text-slate-400 uppercase tracking-wide mb-1">Resumen</p>
+                {{ book.summary }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

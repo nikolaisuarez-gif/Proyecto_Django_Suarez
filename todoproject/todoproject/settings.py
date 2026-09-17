@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'tasks',
     'math_app',
     'rental',
+    'library',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Media files (Pillow / ImageField en la app library)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Email

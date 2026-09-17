@@ -198,3 +198,43 @@ Luego abrir:
 
 - Listado de equipos: http://127.0.0.1:8000/rental/
 - Registrar equipo: http://127.0.0.1:8000/rental/nuevo/
+
+---
+
+# Laboratorio 04 — Relaciones de Modelos en Django
+
+## App `library` (Biblioteca)
+
+Modelos con relaciones: `Author`, `Book`, `Publisher`, `Category`, `Publication` y `BookCategory` (through).
+
+| Relación | Tipo | `on_delete` | `related_name` |
+|----------|------|-------------|----------------|
+| `Book.author` → `Author` | ForeignKey | CASCADE | `books` |
+| `Book.publisher` → `Publisher` | ForeignKey | PROTECT | `books` |
+| `Book.publication` → `Publication` | OneToOneField | CASCADE | `book` |
+| `Book.categories` → `Category` | ManyToManyField (through `BookCategory`) | CASCADE | `books` / `book_categories` |
+
+### Configuración multimedia
+
+- `Pillow` agregado a `requirements.txt`.
+- `MEDIA_URL = '/media/'` y `MEDIA_ROOT = BASE_DIR / 'media'` en `settings.py`.
+- `urls.py` del proyecto sirve los archivos medios en DEBUG.
+
+### Comandos
+
+```bash
+python manage.py makemigrations library
+python manage.py migrate
+python manage.py seed_library      # 2 autores, 4 libros, 3 categorías, 2 editoriales
+python manage.py test library      # 16 casos de prueba
+```
+
+### URLs
+
+- Catálogo: http://127.0.0.1:8000/library/
+- Detalle de libro (autor, editorial, categorías, publicación): http://127.0.0.1:8000/library/book/1/
+
+### Documentación
+
+Evidencia detallada (diagrama, consultas, pruebas, observaciones y conclusiones):
+`documentos/evidencia_lab04_relaciones.md`
