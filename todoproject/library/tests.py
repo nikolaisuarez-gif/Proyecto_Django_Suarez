@@ -152,3 +152,44 @@ class LibraryRelationsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Cien años de soledad")
         self.assertContains(response, "Inés del alma mía")
+
+    # --- Through: accesos inversos con related_name ---
+    def test_through_reverse_related_names(self):
+        self.assertEqual(
+            set(BookCategory.objects.filter(book=self.cien).values_list("category__name", flat=True)),
+            {"Novela", "Realismo mágico"},
+        )
+        self.assertEqual(
+            set(self.novela.book_categories.values_list("book__title", flat=True)),
+            {"Cien años de soledad", "Inés del alma mía"},
+        )
+
+    # --- M2M: forward y reverse coinciden (book.categories vs category.books) ---
+    def test_m2m_forward_and_reverse_match(self):
+        for book in Book.objects.all():
+            self.assertEqual(
+                set(book.categories.all()),
+                set(Category.objects.filter(books=book).distinct()),
+            )
+        self.assertEqual(len(self.cien.categories.all()), 2)
+        self.assertCountEqual(self.realismo.books.all(), [self.cien])
+
+    # --- Filtros usando la O2O en ambos sentidos ---
+    def test_filter_via_o2o_both_sides(self):
+        self.assertEqual(
+            list(Publication.objects.filter(book__title__startswith="Inés")), [self.pub_ines]
+        )
+        self.assertEqual(
+            list(Book.objects.filter(publication__language="Spanish")), [self.cien, self.ines]
+        )
+
+    # --- Meta: orden por defecto y métodos __str__ ---
+    def test_default_ordering_and_str(self):
+        self.assertEqual(
+            list(Book.objects.all()), [self.cien, self.ines]
+        )
+        self.assertEqual(str(self.cien), "Cien años de soledad")
+        self.assertEqual(str(self.garcia), "Gabriel García Márquez")
+        self.assertEqual(str(BookCategory.objects.get(book=self.cien, category=self.novela)), "Cien años de soledad -> Novela")
+        self.assertIn("1ª", str(self.pub_cien))
+        self.assertEqual(Author.objects.first(), self.garcia)
