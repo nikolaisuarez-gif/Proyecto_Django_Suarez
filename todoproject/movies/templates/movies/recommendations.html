@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones de películas</title>
+</head>
+<body>
+    <h1>Recomendaciones de películas</h1>
+
+    <p>
+        Género:
+        {% for item in genres %}
+            <a href="{% url 'movies:recommendations_by_genre' item.pk %}">{{ item.name }}</a>{% if not forloop.last %} | {% endif %}
+        {% endfor %}
+    </p>
+
+    <h2>Películas de {{ genre.name }} mejor valoradas</h2>
+
+    <table border="1" cellpadding="6">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Director</th>
+                <th>Genres</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.year }}</td>
+                    <td>{% if movie.director %}{{ movie.director.name }}{% else %}-{% endif %}</td>
+                    <td>{% for g in movie.genres.all %}{{ g.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                    <td>{{ movie.average|default:"sin valoraciones"|floatformat:1 }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No hay películas para este género.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

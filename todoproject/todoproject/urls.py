@@ -25,6 +25,7 @@ urlpatterns = [
     path('math/', include('math_app.urls')),
     path('rental/', include('rental.urls')),
     path('library/', include('library.urls')),
+    path('movies/', include('movies.urls')),
 ]
 
 if settings.DEBUG:
