@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Evidencia Lab 05 - Administrador con Django</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 40px auto; max-width: 900px; color: #222; }
+h1 { border-bottom: 2px solid #444; padding-bottom: 8px; }
+h2 { margin-top: 36px; color: #0b3d6b; }
+img { max-width: 100%; border: 1px solid #999; margin-top: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+td, th { border: 1px solid #999; padding: 6px 10px; text-align: left; }
+.captura { margin-bottom: 30px; }
+code { background: #f2f2f2; padding: 1px 4px; }
+</style>
+</head>
+<body>
+<h1>Laboratorio 05 — Administrador con Django</h1>
+<p><b>Alumno:</b> Nikolai Suarez<br>
+<b>Correo:</b> nikolai.suarez@tecsup.edu.pe<br>
+<b>Repositorio:</b> https://github.com/nikolaisuarez-gif/Proyecto_Django_Suarez.git<br>
+<b>Curso:</b> Desarrollo de Aplicaciones Empresariales</p>
+
+<h2>1. Los cuatro modelos registrados en el panel (superusuario)</h2>
+<div class="captura"><img src="../capturas/lab05_01_admin_home_superusuario.png" alt="Panel superusuario"></div>
+
+<h2>2. Listado personalizado con list_display, list_filter y search_fields</h2>
+<p>Columnas Title/Year, filtros por género y año, y búsqueda por título.</p>
+<div class="captura"><img src="../capturas/lab05_02_lista_peliculas_filtros.png" alt="Listado con filtros"></div>
+
+<h2>3. Formulario de película con Rating como inline y fechas solo lectura</h2>
+<p>Las valoraciones se dan de alta dentro del registro padre; <code>created_at</code> y <code>updated_at</code> aparecen sin campo editable.</p>
+<div class="captura"><img src="../capturas/lab05_03_formulario_inline_superusuario.png" alt="Inline de ratings"></div>
+
+<h2>4. Panel del usuario editor: solo ve Movies</h2>
+<div class="captura"><img src="../capturas/lab05_04_panel_editor.png" alt="Panel editor"></div>
+
+<h2>5. El editor no tiene botón Delete (añadir y cambiar sí)</h2>
+<div class="captura"><img src="../capturas/lab05_05_editor_sin_boton_delete.png" alt="Editor sin delete"></div>
+
+<h2>6. Vista pública de recomendaciones</h2>
+<p>Películas del mismo género ordenadas por mejor valoración: <code>/movies/recommendations/&lt;genre_id&gt;/</code></p>
+<div class="captura"><img src="../capturas/lab05_06_recomendaciones.png" alt="Recomendaciones"></div>
+
+<h2>Código y pruebas</h2>
+<table>
+<tr><th>Resultado</th><th>Detalle</th></tr>
+<tr><td>Modelos</td><td>Movie, Genre, Person, Rating (Movie↔Genre M2M, Rating→Movie FK)</td></tr>
+<tr><td>Migración</td><td><code>movies/0001_initial.py</code> aplicada</td></tr>
+<tr><td>Admin</td><td>4 modelos registrados + ModelAdmin + RatingInline + campos de auditoría solo lectura</td></tr>
+<tr><td>Datos</td><td>10 películas, 4 géneros, 6 ratings (<code>seed_movies</code>)</td></tr>
+<tr><td>Permisos</td><td>Grupo <code>editores</code>: add_movie + change_movie, sin delete_movie; usuario <code>editor</code></td></tr>
+<tr><td>Tests</td><td><code>py manage.py test movies</code> → 5 tests OK</td></tr>
+<tr><td>Vista</td><td><code>recommendations</code> pública, ordenada por promedio de ratings</td></tr>
+</table>
+
+<h2>Credenciales locales (prueba)</h2>
+<p>Superusuario: <code>nikolai / admin12345</code> &nbsp;|&nbsp; Editor: <code>editor / editor12345</code></p>
+</body>
+</html>
