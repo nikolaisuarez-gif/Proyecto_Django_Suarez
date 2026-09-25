@@ -24,7 +24,8 @@ class Command(BaseCommand):
         )
         if created:
             editor.set_password("editor12345")
-            editor.save()
+        editor.is_staff = True
+        editor.save()
         editor.groups.add(group)
 
         self.stdout.write(
