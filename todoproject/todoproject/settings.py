@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'math_app',
     'rental',
     'library',
+    'movies',
 ]
 
 MIDDLEWARE = [
