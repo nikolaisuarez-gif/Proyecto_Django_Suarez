@@ -1,0 +1,30 @@
+{% extends "exams/base.html" %}
+
+{% block title %}Agregar pregunta{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-2">Agregar pregunta</h1>
+<p class="text-sm text-gray-600 mb-4">Examen: {{ exam.title }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  {{ question_form.as_p }}
+
+  <h2 class="font-semibold mt-4 mb-2">Opciones</h2>
+  {{ formset.management_form }}
+  {% if formset.non_form_errors %}
+    <ul class="text-red-600 text-sm list-disc ml-4">
+      {% for error in formset.non_form_errors %}<li>{{ error }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+  {% for f in formset %}
+    <div class="flex gap-3 items-center mb-2">
+      {{ f.text }}
+      <label class="text-sm whitespace-nowrap">{{ f.is_correct }} es la correcta</label>
+    </div>
+  {% endfor %}
+  <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Guardar</button>
+  <a class="inline-block ml-2 border px-4 py-2 rounded"
+     href="{% url 'exams:exam_detail' exam.pk %}">Cancelar</a>
+</form>
+{% endblock %}

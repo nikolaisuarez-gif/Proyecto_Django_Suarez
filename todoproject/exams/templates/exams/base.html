@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Examenes{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen font-sans">
+
+    <header class="bg-slate-800 text-white">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div>
+                <h1 class="text-lg font-bold">Examenes</h1>
+                <p class="text-xs text-slate-300">Laboratorio &bull; Creacion de Modelos en Django</p>
+            </div>
+            <nav class="flex gap-2 text-xs">
+                <a href="{% url 'exams:exam_list' %}" class="px-3 py-1.5 rounded border border-slate-600">Listado</a>
+                <a href="{% url 'exams:exam_create' %}" class="px-3 py-1.5 rounded bg-blue-600 text-white">Crear examen</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

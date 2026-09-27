@@ -1,0 +1,29 @@
+{% extends "exams/base.html" %}
+
+{% block title %}Examenes{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Lista de examenes</h1>
+
+{% if exams %}
+  <ul class="space-y-2">
+    {% for exam in exams %}
+      <li class="border rounded p-3">
+        <a class="font-semibold text-blue-700" href="{% url 'exams:exam_detail' exam.pk %}">
+          {{ exam.title }}
+        </a>
+        <span class="text-sm text-gray-600">
+          | {{ exam.questions.count }} pregunta{{ exam.questions.count|pluralize }}
+          | created_at: {{ exam.created_at|date:"d/m/Y H:i" }}
+          | activa: {{ exam.active|yesno:"Si,No" }}
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Todavia no hay examenes.</p>
+{% endif %}
+
+<a class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+   href="{% url 'exams:exam_create' %}">Crear examen</a>
+{% endblock %}

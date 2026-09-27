@@ -238,3 +238,45 @@ python manage.py test library      # 16 casos de prueba
 
 Evidencia detallada (diagrama, consultas, pruebas, observaciones y conclusiones):
 `documentos/evidencia_lab04_relaciones.md`
+---
+
+# Laboratorio 06 — Creación de Modelos en Django (App `exams`)
+
+Modelos `Exam`, `Question` y `Choice` con relaciones, `__str__`, `Meta`, migraciones, formularios con formset, validación de una sola respuesta correcta, vistas, plantillas y Django Admin.
+
+## Modelos
+
+```
+Exam (1) ────< Question (1) ────< Choice
+```
+
+| Modelo | Campos |
+|--------|--------|
+| `Exam` | `title`, `description`, `active`, `created_at` |
+| `Question` | `exam` (FK CASCADE), `text`, `puntaje` |
+| `Choice` | `question` (FK CASCADE), `text`, `is_correct` |
+
+## Comandos
+
+```bash
+python manage.py makemigrations exams   # 0001_initial
+python manage.py migrate
+python manage.py seed_exams             # 1 examen, 2 preguntas, 8 opciones
+python manage.py createsuperuser        # usuario: nikolai
+python manage.py test exams             # 18 pruebas
+python manage.py runserver
+```
+
+### URLs
+
+- `/exams/` — listado de exámenes
+- `/exams/nuevo/` — crear examen con formset de opciones
+- `/exams/1/` — detalle del examen
+- `/exams/1/pregunta/nueva/` — agregar pregunta con sus opciones
+- `/exams/pregunta/1/` — detalle de pregunta
+- `/admin/` — Django Admin
+
+### Documentación
+
+Explicaciones, casos de prueba, justificación de campos, observaciones de migraciones y conclusiones:
+`documentos/evidencia_lab06_modelos.md`

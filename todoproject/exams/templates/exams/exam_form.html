@@ -1,0 +1,30 @@
+{% extends "exams/base.html" %}
+
+{% block title %}Crear examen{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Crear examen</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {{ question_form.as_p }}
+
+  <h2 class="font-semibold mt-4 mb-2">Opciones de la pregunta</h2>
+  {{ formset.management_form }}
+  {% if formset.non_form_errors %}
+    <ul class="text-red-600 text-sm list-disc ml-4">
+      {% for error in formset.non_form_errors %}<li>{{ error }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+  {% for f in formset %}
+    <div class="flex gap-3 items-center mb-2">
+      {{ f.text }}
+      <label class="text-sm whitespace-nowrap">{{ f.is_correct }} es la correcta</label>
+    </div>
+  {% endfor %}
+  {% if formset.non_form_errors %}{% endif %}
+  {{ formset.non_form_errors }}
+  <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Guardar</button>
+</form>
+{% endblock %}
