@@ -280,3 +280,14 @@ python manage.py runserver
 
 Explicaciones, casos de prueba, justificación de campos, observaciones de migraciones y conclusiones:
 `documentos/evidencia_lab06_modelos.md`
+
+
+# Entrega de laboratorios 6–8
+
+Los siguientes laboratorios están organizados en carpetas independientes dentro de `laboratorios/`. El Laboratorio 6 de plantillas es distinto del Laboratorio 06 de modelos ya documentado arriba.
+
+- [Laboratorio 6 — Motor de plantillas](laboratorios/lab06/README.md)
+- [Laboratorio 7 + extra — ORM, IA y agente seguro](laboratorios/lab07/README.md)
+- [Laboratorio 8 — API REST](laboratorios/lab08/README.md)
+
+Cada carpeta incluye el proyecto descargable, el informe en PDF y la copia editable en DOCX.
