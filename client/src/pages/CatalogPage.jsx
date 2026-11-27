@@ -7,7 +7,7 @@ import ProductCard from '../components/ProductCard.jsx'
 export default function CatalogPage() {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(() => new URLSearchParams(window.location.search).get('category') ?? '')
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
 
