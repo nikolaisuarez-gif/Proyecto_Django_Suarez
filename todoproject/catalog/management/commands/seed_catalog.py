@@ -2,7 +2,6 @@ from pathlib import Path
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from django.core.files import File
 from django.utils.text import slugify
 
 from catalog.models import Category, Product
@@ -44,7 +43,8 @@ class Command(BaseCommand):
                     'price': price, 'stock': stock,
                 },
             )
-            if created or not product.image:
-                with image_path.open('rb') as image_file:
-                    product.image.save(filename, File(image_file), save=True)
+            image_name = f'products/{filename}'
+            if created or product.image.name != image_name:
+                product.image.name = image_name
+                product.save(update_fields=['image'])
         self.stdout.write(self.style.SUCCESS('Catálogo listo: 3 categorías y 8 productos con imagen.'))
