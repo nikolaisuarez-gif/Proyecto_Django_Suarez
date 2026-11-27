@@ -27,6 +27,7 @@ urlpatterns = [
     path('library/', include('library.urls')),
     path('movies/', include('movies.urls')),
     path('exams/', include('exams.urls')),
+    path('api/', include('catalog.urls')),
 ]
 
 if settings.DEBUG:
