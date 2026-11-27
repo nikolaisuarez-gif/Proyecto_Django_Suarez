@@ -291,3 +291,46 @@ Los siguientes laboratorios están organizados en carpetas independientes dentro
 - [Laboratorio 8 — API REST](laboratorios/lab08/README.md)
 
 Cada carpeta incluye el proyecto descargable, el informe en PDF y la copia editable en DOCX.
+
+# Laboratorio 13 — Catálogo de comercio electrónico
+
+Implementación acumulativa de un catálogo conectado entre Django REST Framework y React. La API expone productos con los datos de categoría anidados; el cliente consulta los recursos mediante una capa de servicios Axios y permite listar, filtrar, crear, editar y eliminar productos.
+
+## Ejecutar en Windows
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python todoproject\manage.py migrate
+python todoproject\manage.py seed_catalog
+python todoproject\manage.py runserver
+```
+
+En otra terminal:
+
+```powershell
+cd client
+npm install
+npm run dev
+```
+
+Abrir `http://127.0.0.1:5173`. La API está en `http://127.0.0.1:8000/api/`. Se puede cambiar la URL en `client/.env` usando como guía `client/.env.example`.
+
+## Rutas de la API
+
+| Método | Ruta | Uso |
+|---|---|---|
+| GET, POST | `/api/categories/` | Listar y crear categorías |
+| GET, PATCH, DELETE | `/api/categories/{id}/` | Consultar, modificar y borrar una categoría |
+| GET, POST | `/api/products/` | Listar y crear productos; `?category={id}` filtra por categoría |
+| GET, PUT, PATCH, DELETE | `/api/products/{id}/` | Consultar, modificar y borrar un producto |
+
+La respuesta del producto incluye `category: {id, name, description}`. Para escritura se envía `category_id` junto con el nombre, la descripción, el precio, las existencias y, opcionalmente, una imagen.
+
+## Evidencia y pruebas
+
+- `python todoproject/manage.py test catalog` ejecuta 6 pruebas del API: categoría anidada, filtro, creación, actualización, borrado y validación del precio.
+- `npm run build` dentro de `client/` compila el cliente de producción.
+- Las capturas del catálogo y del filtro están en `capturas/lab13_catalogo.png` y `capturas/lab13_filtro_categoria.png`.
+- El informe con diagrama, tabla del API, capturas, casos, resultados y conclusiones está en `laboratorios/lab13/Informe_Laboratorio_13.pdf`.
